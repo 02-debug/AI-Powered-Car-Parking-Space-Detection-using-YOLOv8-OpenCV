@@ -1,0 +1,33 @@
+🚗 YOLOv8-based Vehicle Detection
+
+Detects cars, bikes, buses, and trucks
+
+High accuracy with confidence threshold control
+
+🖱️ Interactive Parking Space Selection
+
+Drag-and-select parking areas
+
+Undo, reset, and delete individual spaces
+
+Layout saved for future runs
+
+📊 Real-Time Occupancy Analysis
+
+Color-coded visualization (Green = Empty, Red = Occupied)
+
+Live count of total, occupied, and available spaces
+
+📈 Automated Analytics & Reports
+
+Visual dashboard (charts & graphs)
+
+Text-based summary report
+
+CSV logging for historical analysis
+
+🎓 Academic & Learning Friendly
+
+Well-structured codebase
+
+Ideal for CV, ML, IoT, and data analytics projects
