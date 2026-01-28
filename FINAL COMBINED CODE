@@ -1,0 +1,124 @@
+import cv2
+import numpy as np
+from ultralytics import YOLO
+import os
+
+# ---------------- CONFIG ----------------
+IMAGE_PATH = "carPark.jpg"      # or None
+VIDEO_PATH = None               # or "carPark.mp4"
+SLOT_FILE = "parking_slots.npy"
+CONFIDENCE = 0.4
+VEHICLE_CLASSES = [2, 3, 5, 7]  # car, motorcycle, bus, truck
+# ----------------------------------------
+
+model = YOLO("yolov8n.pt")
+parking_slots = []
+drawing = False
+ix, iy = -1, -1
+
+# ---------- Mouse callback for slot selection ----------
+def draw_slots(event, x, y, flags, param):
+    global ix, iy, drawing, parking_slots
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        ix, iy = x, y
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        w, h = abs(x - ix), abs(y - iy)
+        parking_slots.append((min(ix, x), min(iy, y), w, h))
+
+# ---------- Vehicle detection ----------
+def detect_vehicles(frame):
+    results = model(frame, conf=CONFIDENCE, verbose=False)
+    boxes = []
+
+    for r in results:
+        for b in r.boxes:
+            if int(b.cls[0]) in VEHICLE_CLASSES:
+                x1, y1, x2, y2 = map(int, b.xyxy[0])
+                boxes.append((x1, y1, x2, y2))
+    return boxes
+
+# ---------- Occupancy check ----------
+def check_occupancy(vehicle_boxes):
+    status = []
+
+    for (px, py, pw, ph) in parking_slots:
+        occupied = False
+        for (x1, y1, x2, y2) in vehicle_boxes:
+            if x1 < px + pw and x2 > px and y1 < py + ph and y2 > py:
+                occupied = True
+                break
+        status.append(occupied)
+    return status
+
+# ---------- Draw results ----------
+def draw_results(frame, status):
+    free = 0
+    for i, ((x, y, w, h), occ) in enumerate(zip(parking_slots, status)):
+        color = (0, 0, 255) if occ else (0, 255, 0)
+        if not occ:
+            free += 1
+        cv2.rectangle(frame, (x, y), (x+w, y+h), color, 2)
+
+    cv2.putText(frame, f"Free: {free}/{len(parking_slots)}",
+                (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                (255, 255, 255), 2)
+
+# ---------- Main processing ----------
+def process(frame):
+    vehicles = detect_vehicles(frame)
+    status = check_occupancy(vehicles)
+    draw_results(frame, status)
+
+# ---------- Load parking slots ----------
+if os.path.exists(SLOT_FILE):
+    parking_slots = list(np.load(SLOT_FILE, allow_pickle=True))
+
+# ---------- IMAGE MODE ----------
+if IMAGE_PATH:
+    img = cv2.imread(IMAGE_PATH)
+    cv2.namedWindow("Parking AI")
+    cv2.setMouseCallback("Parking AI", draw_slots)
+
+    while True:
+        display = img.copy()
+
+        for (x, y, w, h) in parking_slots:
+            cv2.rectangle(display, (x, y), (x+w, y+h), (255, 0, 255), 2)
+
+        cv2.imshow("Parking AI", display)
+        key = cv2.waitKey(1)
+
+        if key == ord('s'):
+            np.save(SLOT_FILE, parking_slots)
+            print("Parking slots saved")
+
+        if key == ord('d'):
+            process(img)
+            cv2.imshow("Parking AI", img)
+
+        if key == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+
+# ---------- VIDEO MODE ----------
+if VIDEO_PATH:
+    cap = cv2.VideoCapture(VIDEO_PATH)
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        process(frame)
+        cv2.imshow("Parking AI", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
