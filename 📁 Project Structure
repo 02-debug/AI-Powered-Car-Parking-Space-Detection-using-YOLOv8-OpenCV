@@ -1,0 +1,6 @@
+Car-Parking-Detection/
+│
+├── parking_ai.py        # Main program (FINAL)
+├── carPark.jpg          # Sample image
+├── carPark.mp4          # Sample video
+├── parking_slots.npy    # Saved parking spaces (auto-created)
