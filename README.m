@@ -268,7 +268,7 @@ Real-time on CPU
 
 Faster with GPU (CUDA)
 
-1️⃣5️⃣ LIMITATIONS (EXAMINERS LOVE THIS)
+1️⃣5️⃣ LIMITATIONS 
 
 ❌ Occluded vehicles may be missed
 ❌ Extreme shadows can affect detection
@@ -283,29 +283,4 @@ Faster with GPU (CUDA)
 ✅ Cloud-based dashboard
 ✅ Mobile app integration
 ✅ IoT sensor fusion
-
-1️⃣7️⃣ FINAL YEAR PROJECT DESCRIPTION (COPY-PASTE)
-
-This project presents an AI-powered parking space detection system using YOLOv8 and OpenCV. The system detects vehicles in parking lots, identifies occupied and vacant spaces in real time, and provides visual and statistical outputs. It reduces manual monitoring and enables smart parking management.
-
-1️⃣8️⃣ VIVA QUESTIONS & ANSWERS
-
-Q: Why YOLOv8?
-A: Because it offers high accuracy with real-time speed.
-
-Q: How occupancy is decided?
-A: Using bounding box overlap logic.
-
-Q: Can it work live?
-A: Yes, with CCTV camera feeds.
-
-Q: Why manual parking marking?
-A: To support any parking layout without retraining.
-
-✅ YOU NOW HAVE
-
-✔ Full technical understanding
-✔ Viva-ready explanation
-✔ Final-year project ready
-✔ Interview-ready confidence
 
