@@ -27,6 +27,7 @@ YOLOv8 (Deep Learning) → to detect vehicles
 OpenCV (Computer Vision) → to draw, analyze, and display results
 
 2️⃣ REAL-WORLD PROBLEM IT SOLVES
+
 Traditional Problems:
 
 ❌ Manual parking checks
@@ -42,6 +43,7 @@ Our Solution:
 ✅ Smart parking readiness
 
 3️⃣ TECHNOLOGIES USED (WHY EACH IS USED)
+
 🔹 Python
 
 Easy to implement AI + CV
@@ -71,6 +73,7 @@ Save and load parking slot coordinates
 Efficient data handling
 
 4️⃣ SYSTEM ARCHITECTURE (HIGH LEVEL)
+
 Image / Video
      ↓
 YOLOv8 Vehicle Detection
@@ -82,6 +85,7 @@ Occupied / Empty Classification
 Visualization + Statistics
 
 5️⃣ HOW PARKING SPACES ARE DEFINED (IMPORTANT)
+
 Step 1: Manual Selection (Once Only)
 
 User draws rectangles using the mouse
@@ -105,6 +109,7 @@ This file stores:
 (x, y, width, height)
 
 6️⃣ VEHICLE DETECTION (YOLOv8 EXPLAINED)
+
 YOLO = You Only Look Once
 
 YOLOv8 detects objects in one pass, making it very fast.
@@ -167,6 +172,7 @@ Color	Meaning
 
 This makes the output human-readable instantly.
 
+
 9️⃣ REAL-TIME STATISTICS
 
 Displayed on screen:
@@ -194,6 +200,8 @@ Key	Function
 S	Save parking slots
 D	Run detection
 Q	Quit program
+
+
 1️⃣1️⃣ IMAGE MODE WORKFLOW
 
 Load image
@@ -233,12 +241,15 @@ CCTV footage
 Parking monitoring
 
 1️⃣3️⃣ FILE EXPLANATION
+
 File	Purpose
 parking_ai.py	Main logic
 parking_slots.npy	Saved parking coordinates
 carPark.jpg	Sample image
 carPark.mp4	Sample video
+
 1️⃣4️⃣ ACCURACY & PERFORMANCE
+
 Accuracy:
 
 ~90–95% with YOLOv8
